@@ -1,68 +1,76 @@
 # 鸭子工具箱
 
-这是一个面向 Android APK 反编译/修补/打包脚本工程的维护仓库。它用于：
-- 以 Java 方式扩展 APK 原生逻辑
-- 通过 Smali/DEX 回填链路保持工程可维护性
-- 自动校验 JS / Shell / 资产完整性
-- 一键打包并签名输出 APK
+这是一个面向 Android APK 反编译 / 修补 / 打包的工程脚本仓库，目标是把“散乱的根目录脚本”升级为真正的 APK 工程目录结构。
 
-目录说明
+当前工程结构
 
 ```text
 .
 ├── README.md
+├── AndroidManifest.xml
+├── apktool.yml
+├── apktool.jar
 ├── .gitignore
-├── AndroidManifest.xml                  # 兼容保留：根目录清单
-├── docs/
-│   └── PROJECT_STRUCTURE.md
 ├── app/
 │   ├── README.md
 │   ├── assets/
+│   │   ├── README.md
+│   │   ├── components/
+│   │   └── components_Perfect/
 │   ├── res/
-│   └── smali/
+│   │   └── README.md
+│   ├── smali/
+│   │   └── com/
+│   │       └── yazi/
+│   │           └── toolbox/
+│   └── java/
+│       └── README.md
 ├── scripts/
-│   ├── _common.ps1                     # 公共工具函数（SDK / 路径解析）
+│   ├── _common.ps1
 │   ├── build/
 │   │   ├── build_java.bat
-│   │   └── build_java.ps1
+│   │   ├── build_java.ps1
+│   │   └── README.md
 │   ├── quality/
 │   │   ├── check_js.py
 │   │   └── check_sh.py
 │   └── packaging/
 │       ├── gen_baseline.ps1
-│       └── rebuild_assetlist.py
+│       ├── rebuild_assetlist.py
+│       └── README.md
 ├── tools/
 │   └── integrity/
 │       ├── RegenIntegrity.java
 │       └── VerifyIntegrity.java
 ├── packaging/
 │   └── 一键打包.bat
+├── docs/
+│   └── PROJECT_STRUCTURE.md
 ├── legacy/
 │   └── README.md
-└── build_java.bat                     # 兼容入口，转到 scripts/build/build_java.bat
+├── build_java.bat
+├── gen_baseline.ps1
+└── 一键打包.bat
 ```
 
-工作流建议
+工程规则
 
-1. 先编辑 Java 代码放入 `app/java/` 或对应模块目录。
-2. 执行 `scripts/build/build_java.bat` 生成 Smali 并回填到 `smali/`。
-3. 执行脚本检查：
-   - `python scripts/quality/check_js.py`
-   - `python scripts/quality/check_sh.py`
-4. 重新打包：
-   - `packaging/一键打包.bat`
-5. 如需重算完整性：
-   - `java tools/integrity/RegenIntegrity.java <apk_path>`
+- `app/` 是实际 APK 工程区域，包含资产、资源、Smali 及 Java 模块。
+- `scripts/` 专门用于构建、质量检查和资源处理。
+- `tools/integrity/` 负责完整性校验与重算。
+- `packaging/` 是正式打包入口，统一做 release 流程。
+- `legacy/` 保留历史脚本兼容入口，便于平滑迁移。
 
-维护原则
+建议使用流程
 
-- 统一使用相对路径，不再依赖硬编码 Windows 用户目录。
-- 兼容旧脚本入口保留，避免历史调用中断。
-- 新增脚本优先放到 `scripts/`、`tools/`、`app/` 等结构目录。
-- 避免把所有内容混在根目录，易于后续扩展和 CI 接入。
+1. 在 `app/java/` 中放置新 Java 逻辑。
+2. 执行 `scripts/build/build_java.bat`，生成 Smali 并回填到 `app/smali/`。
+3. 执行 `python scripts/quality/check_js.py` 与 `python scripts/quality/check_sh.py`。
+4. 执行 `packaging/一键打包.bat`，输出签名 APK。
+5. 如需校验完整性，执行 `java tools/integrity/VerifyIntegrity.java <apk>`。
 
-当前状态
+说明
 
-- 仓库已从“根目录杂乱型”整理为“脚本 + 工具 + 打包 + app 结构型”。
-- 保留兼容层，便于历史脚本仍可继续调用。
-- 若后续正式接入完整 APK 源码，可继续将 `app/assets`、`app/res`、`app/smali` 逐步补齐。
+- 本仓库已从“根目录散装状态”逐步演化为真正的 APK 工程结构。
+- 旧入口脚本已保留为兼容层，确保历史脚本调用不立刻失效。
+- 后续新增真实 APK 资源时，优先写入 `app/` 目录，而非继续堆到根目录。
