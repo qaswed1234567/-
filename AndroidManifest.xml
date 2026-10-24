@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.yazi.toolbox">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 性能 HUD 悬浮窗：属于特殊权限，声明后还需用户在系统设置里手动打开（界面会引导） -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <application android:allowBackup="false" android:hardwareAccelerated="true" android:icon="@drawable/heci" android:label="鸭子工具箱" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <meta-data android:name="android.max_aspect" android:value="2.6"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!-- 长任务保活：安装/修复类脚本跑起来后把进程提到前台，避免切后台被系统回收而丢回调 -->
+        <service android:exported="false" android:foregroundServiceType="dataSync" android:name=".YaziTaskService"/>
+        <!-- 性能 HUD 悬浮窗（前台服务 + 可拖动悬浮窗） -->
+        <service android:exported="false" android:foregroundServiceType="dataSync" android:name=".YaziHudService"/>
+    </application>
+</manifest>
