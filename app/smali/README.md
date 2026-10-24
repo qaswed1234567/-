@@ -1,9 +1,14 @@
-# smali 目录
-
-用于存放反编译后的 smali 代码。
+# smali 目录模板
 
 ```text
-app/smali/com/yazi/toolbox/
+app/smali/
+├── README.md
+└── com/
+    └── yazi/
+        └── toolbox/
 ```
 
-这里是 Java 代码编译回填、apktool 反编译后的工作区，和后续 APK 修补最关键的目录。
+说明：
+- 该目录是最终产物目录
+- 由工程编译和反编译工具自动生成
+- 不建议在这里直接手工堆放杂项文件

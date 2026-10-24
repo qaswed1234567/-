@@ -1,10 +1,8 @@
-# 组件目录
-
-用于保存 UI 组件或附加资源文件。
+# 组件目录模板
 
 ```text
 app/assets/components/
-app/assets/components_Perfect/
+└── README.md
 ```
 
-这里放置的文件会参与组件基线校验和打包流程。
+用于保存默认组件资源与可更新的前端/脚本资源文件。

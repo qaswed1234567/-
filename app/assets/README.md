@@ -1,11 +1,27 @@
 # assets 目录
 
-用于存放 APK 包内资产文件，例如：
+`app/assets/` 是 APK 内资源存储区，用于存放组件、脚本和二进制资源。
 
-- `components/`
-- `components_Perfect/`
-- `scripts/`
-- `index.html`
-- `integrity.bin`
+推荐结构：
 
-本目录已作为真实工程资产目录占位，后续新增资源建议放在这里。
+```text
+app/assets/
+├── README.md
+├── components/
+│   └── README.md
+├── components_Perfect/
+│   └── README.md
+├── scripts/
+│   └── README.md
+├── bin/
+│   └── README.md
+├── index.html
+├── avatar.png
+└── integrity.bin
+```
+
+说明：
+- `components/`：普通组件目录
+- `components_Perfect/`：优先级更高/修正后的组件目录
+- `scripts/`：运行于 APK 内部的脚本
+- `bin/`：可执行文件与辅助二进制

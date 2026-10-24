@@ -1,10 +1,16 @@
-# build 脚本说明
+# 构建脚本说明
 
-此目录是 Java -> Smali 编译链路的主入口，负责：
-- 编译 Java 源码
-- 生成 classes.dex
-- 回填到 `app/smali/`
+此目录包含 Java 编译和 Smali 回填相关脚本。
 
-脚本：
-- `build_java.bat`
-- `build_java.ps1`
+```text
+scripts/build/
+├── README.md
+├── build_java.bat
+├── build_java.ps1
+```
+
+工作流：
+1. 维护 `app/java/` 中 Java 源码
+2. 执行 `build_java.bat`
+3. 自动生成类文件和 dex
+4. 回填至 `app/smali/`
