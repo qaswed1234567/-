@@ -1,7 +1,13 @@
 @echo off
 chcp 65001 >nul
-rem 鸭子工具箱 Java 扩展编译脚本（把 java\ 编成 smali 回填到 smali\）
-rem 用法：双击本文件；或 build_java.bat <模板apk路径>
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0build_java.ps1" %*
-echo.
-pause
+setlocal
+
+rem 兼容入口：调用新的脚本目录；避免根目录脚本长期失效。
+set "ROOT=%~dp0"
+set "TARGET=%ROOT%scripts\build\build_java.bat"
+if not exist "%TARGET%" (
+    echo [X] 未找到目标脚本：%TARGET%
+    exit /b 1
+)
+call "%TARGET%" %*
+exit /b %ERRORLEVEL%

@@ -1,0 +1,54 @@
+# 统一忽略规则
+
+适用于 Android / Windows / Java / 反编译工程产物。
+
+```gitignore
+# 操作系统
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE / 工具
+.vscode/
+.idea/
+*.iml
+
+# Java / Android / 构建产物
+*.class
+*.dex
+*.apk
+*.apks
+*.aab
+*.jar
+*.keystore
+*.jks
+*.log
+build/
+bin/
+out/
+obj/
+dist/
+classes/
+*.tmp
+*.part
+
+# 反编译工程中常见临时目录
+/app/assets/
+/app/res/
+/app/smali/
+build_java/
+C:/apkbuild/
+
+# 生成的整包缓存
+*.sha256
+*.sha1
+*.md5
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Windows 临时
+~$
+```
